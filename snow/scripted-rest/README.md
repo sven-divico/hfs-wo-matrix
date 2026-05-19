@@ -1,6 +1,8 @@
 # Scripted REST stubs for the wo-matrix showcase
 
-Four GlideScript resources that return deterministic synthetic data matching the contract documented in [dev-guide/01-api-specification.md](https://github.com/sven-divico/hfs-demonstrator/blob/main/dev-guide/01-api-specification.md). They let the deployed Web Component render end-to-end on a fresh PDI without standing up the three-table data model.
+Four GlideScript resources that return deterministic synthetic data matching the contract documented in [docs/03-api-contract.md](../../docs/03-api-contract.md). They let the deployed component render end-to-end on a fresh PDI without standing up the three-table data model.
+
+For the production back-end pattern that replaces these stubs, see [docs/04-data-model.md](../../docs/04-data-model.md) + [docs/05-scripted-rest.md](../../docs/05-scripted-rest.md).
 
 ## URL layout
 
