@@ -283,7 +283,11 @@ class WoStatusMatrix extends HTMLElement {
     try {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const raw = await res.json();
+      // ServiceNow Scripted REST APIs wrap every payload in a `result`
+      // envelope. Strip it if present; in the demonstrator/local stub the
+      // payload arrives flat.
+      const data = raw && raw.result !== undefined ? raw.result : raw;
       loading.remove();
       this._render(data);
       this._renderPaginator(data);

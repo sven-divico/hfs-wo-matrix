@@ -170,7 +170,10 @@ class TaskDetailTab extends HTMLElement {
       const url = `${baseUrl}/customer-orders/${encodeURIComponent(coUuid)}/tasks/${encodeURIComponent(taskName)}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const task = await res.json();
+      const raw = await res.json();
+      // Unwrap SNOW's `{result: ...}` envelope; pass through flat payloads
+      // unchanged so the demonstrator and local stub keep working.
+      const task = raw && raw.result !== undefined ? raw.result : raw;
 
       this._shadow.querySelector(".loading")?.remove();
       this._render(task, { coUuid, coNumber, taskName, tabId });

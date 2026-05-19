@@ -177,7 +177,10 @@ class RfsDetailTab extends HTMLElement {
     try {
       const res = await fetch(`${baseUrl}/rfs-orders/${encodeURIComponent(rfsId)}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const raw = await res.json();
+      // Unwrap SNOW's `{result: ...}` envelope; pass through flat payloads
+      // unchanged so the demonstrator and local stub keep working.
+      const data = raw && raw.result !== undefined ? raw.result : raw;
       this._shadow.querySelector(".loading")?.remove();
       this._render(data);
     } catch (err) {
