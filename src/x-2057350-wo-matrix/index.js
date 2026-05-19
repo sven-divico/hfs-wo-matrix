@@ -22,8 +22,17 @@ const ListIcon = () => (
 	</svg>
 );
 
-const view = (state, {dispatch}) => {
-	const {properties: {endpoint, baseUrl}, list} = state;
+// NXF has two view-arg shapes. Classic: `(state, helpers)` where `state` has
+// `state.properties.endpoint` etc. Coeffects: a single bag `{state, properties,
+// dispatch, updateState, host, …}` and the second arg is undefined. Decide
+// based on the presence of arg2 so the component renders either way.
+const view = (arg1, arg2) => {
+	const coeffects  = arg2 === undefined;
+	const properties = (coeffects ? arg1.properties : arg1.properties) || {};
+	const stateBag   = coeffects ? (arg1.state || {})                 : arg1;
+	const dispatch   = coeffects ? arg1.dispatch                      : arg2.dispatch;
+	const {endpoint = '', baseUrl = ''} = properties;
+	const {list = 'legacy'}             = stateBag;
 	const setList = next => dispatch('HFS#SIDEBAR_LIST_CLICKED', {list: next});
 	return (
 		<div className="hfs-shell">
