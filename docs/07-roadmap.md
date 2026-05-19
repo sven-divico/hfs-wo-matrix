@@ -38,7 +38,7 @@ The migration is largely mechanical:
 
 The component is currently read-only — no `POST` / `PATCH` / `DELETE`. Reasonable next steps:
 
-- **Schedule appointment** — the "Schedule Appointment" button in `<customer-order-detail-tab>` currently dispatches a `ui:toast` "demo only" message. Wire it to a Scripted REST `POST /customer-orders/{uuid}/schedule` that writes `wm_customer_order.scheduled_appointment`.
+- **Schedule appointment** — the "Schedule Appointment" button in `<customer-order-detail-tab>` currently dispatches a `ui:toast` "demo only" message. Wire it to a Scripted REST `POST /customer_orders/{uuid}/schedule` that writes `wm_customer_order.scheduled_appointment`.
 - **Task reassignment** — clicking a task could open an inline editor on `assignment_group`. Needs a `PATCH /tasks/{taskId}` + an ACL gate on the dispatcher role.
 - **Bulk close** — multi-select rows in the matrix, then a workspace action button "Close X orders". Cross-cuts the macroponent's action handlers + a new Scripted REST.
 

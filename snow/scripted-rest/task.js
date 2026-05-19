@@ -1,6 +1,6 @@
-// Scripted REST resource: GET /api/<namespace>/customer-orders/{uuid}/tasks/{taskName}
+// Scripted REST resource: GET /api/<namespace>/customer_orders/{uuid}/tasks/{taskName}
 //
-// Lives on the same `customer-orders` API as customer-order.js, just a deeper
+// Lives on the same `customer_orders` API as customer-order.js, just a deeper
 // resource path. Returns a single task detail. The taskName is the canonical
 // German name from task-columns.json (e.g. "Spleißen", "GIS Planung").
 //

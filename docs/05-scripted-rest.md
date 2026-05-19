@@ -20,9 +20,9 @@ Each resource family becomes its own Scripted REST API record. For the four endp
 
 | Name | API ID *(override to kebab)* | Application scope | Resources |
 |---|---|---|---|
-| Work Orders | `work-orders` | your wo-matrix scope | `GET /matrix` |
-| Customer Orders | `customer-orders` | your wo-matrix scope | `GET /{uuid}`, `GET /{uuid}/tasks/{taskName}` |
-| RFS Orders | `rfs-orders` | your wo-matrix scope | `GET /{rfsId}` |
+| Work Orders | `work_orders` | your wo-matrix scope | `GET /matrix` |
+| Customer Orders | `customer_orders` | your wo-matrix scope | `GET /{uuid}`, `GET /{uuid}/tasks/{taskName}` |
+| RFS Orders | `rfs_orders` | your wo-matrix scope | `GET /{rfsId}` |
 
 > **API ID gotcha:** SNOW auto-derives the API ID from the Name field as snake_case (`"Work Orders"` → `work_orders`). The vendor code in [`src/x-2057350-wo-matrix/vendor/`](../src/x-2057350-wo-matrix/vendor/) constructs URLs with kebab-case path segments. Override the auto-derived API ID to the kebab form at create time, otherwise the detail-tab fetches will 404. The showcase stubs in [`snow/scripted-rest/README.md`](../snow/scripted-rest/README.md) document the same pattern.
 
@@ -133,7 +133,7 @@ Build this first to confirm your scaffold works end-to-end. The wrapper componen
 ```
 
 **Smoke test:**
-- REST API Explorer → URL: `/api/<namespace>/work-orders/task-columns`
+- REST API Explorer → URL: `/api/<namespace>/work_orders/task-columns`
 - Expected: JSON array, 17 entries, first one `{"name":"HV-S","short":"HV",...}` (wrapped in `{"result": [...]}` by SNOW).
 
 If this works, your service + scope + Script Include are wired correctly.
@@ -346,7 +346,7 @@ Replaces [`snow/scripted-rest/customer-order.js`](../snow/scripted-rest/customer
         response.setStatus(200);
         response.setBody(out);
     } catch (e) {
-        gs.error('HFS Matrix /customer-orders error: ' + e + '\nStack: ' + e.stack);
+        gs.error('HFS Matrix /customer_orders error: ' + e + '\nStack: ' + e.stack);
         response.setStatus(500);
         response.setBody({ error: 'internal', message: 'Internal server error.' });
     }
@@ -409,7 +409,7 @@ Replaces [`snow/scripted-rest/rfs-order.js`](../snow/scripted-rest/rfs-order.js)
             tasks: tasks
         });
     } catch (e) {
-        gs.error('HFS Matrix /rfs-orders error: ' + e + '\nStack: ' + e.stack);
+        gs.error('HFS Matrix /rfs_orders error: ' + e + '\nStack: ' + e.stack);
         response.setStatus(500);
         response.setBody({ error: 'internal', message: 'Internal server error.' });
     }
@@ -503,7 +503,7 @@ function buildLink(baseUrl, list, off, lim, rel) {
 }
 var links = [];
 var base  = '/api/' + gs.getProperty('glide.scriptedrest.api.namespace') +
-            '/work-orders/matrix';
+            '/work_orders/matrix';
 if (offset > 0)             links.push(buildLink(base, list, Math.max(0, offset - limit), limit, 'prev'));
 if (offset + limit < total) links.push(buildLink(base, list, offset + limit,             limit, 'next'));
 if (links.length)           response.setHeader('Link', links.join(', '));

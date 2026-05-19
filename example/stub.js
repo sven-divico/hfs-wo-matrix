@@ -175,8 +175,8 @@ function handleStub(urlString) {
 	const path     = url.pathname.slice(STUB_PREFIX.length); // drop "/stub/wo-matrix"
 	const params   = url.searchParams;
 
-	// /work-orders/matrix?list=…&limit=…&offset=…
-	if (path === "/work-orders/matrix") {
+	// /work_orders/matrix?list=…&limit=…&offset=…
+	if (path === "/work_orders/matrix") {
 		const list   = params.get("list")   ?? "legacy";
 		const limit  = Number(params.get("limit")  ?? 25);
 		const offset = Number(params.get("offset") ?? 0);
@@ -184,16 +184,16 @@ function handleStub(urlString) {
 		return jsonResponse(paginate(rows, limit, offset));
 	}
 
-	// /customer-orders/{uuid}/tasks/{taskName}
-	let m = path.match(/^\/customer-orders\/([^/]+)\/tasks\/(.+)$/);
+	// /customer_orders/{uuid}/tasks/{taskName}
+	let m = path.match(/^\/customer_orders\/([^/]+)\/tasks\/(.+)$/);
 	if (m) return jsonResponse(buildTaskDetail(decodeURIComponent(m[1]), decodeURIComponent(m[2])));
 
-	// /customer-orders/{uuid}
-	m = path.match(/^\/customer-orders\/([^/]+)$/);
+	// /customer_orders/{uuid}
+	m = path.match(/^\/customer_orders\/([^/]+)$/);
 	if (m) return jsonResponse(buildCustomerOrder(decodeURIComponent(m[1])));
 
-	// /rfs-orders/{rfsId}
-	m = path.match(/^\/rfs-orders\/([^/]+)$/);
+	// /rfs_orders/{rfsId}
+	m = path.match(/^\/rfs_orders\/([^/]+)$/);
 	if (m) return jsonResponse(buildRfsOrder(decodeURIComponent(m[1])));
 
 	return new Response(`Stub: no handler for ${url.pathname}`, {status: 404});
@@ -215,5 +215,5 @@ export function installStub() {
 	};
 }
 
-export const STUB_ENDPOINT  = `${STUB_PREFIX}/work-orders/matrix`;
+export const STUB_ENDPOINT  = `${STUB_PREFIX}/work_orders/matrix`;
 export const STUB_BASE_URL  = STUB_PREFIX;

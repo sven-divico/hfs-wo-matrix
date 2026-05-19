@@ -2,7 +2,7 @@
  * <wo-status-matrix> — Pivoted Work Order × Task status table
  *
  * Attributes:
- *   data-endpoint   URL prefix, e.g. /api/work-orders/matrix
+ *   data-endpoint   URL prefix, e.g. /api/work_orders/matrix
  *   data-list       "legacy" | "attention"  (observed — refetches on change)
  *
  * Events dispatched on document (bubbles: true, composed: true):
@@ -265,7 +265,7 @@ class WoStatusMatrix extends HTMLElement {
   }
 
   async _fetch() {
-    const endpoint = this.dataset.endpoint ?? "/api/work-orders/matrix";
+    const endpoint = this.dataset.endpoint ?? "/api/work_orders/matrix";
     const list     = this.dataset.list     ?? "legacy";
 
     const scroll = this._shadow.querySelector(".table-scroll");

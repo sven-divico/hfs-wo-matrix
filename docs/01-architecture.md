@@ -71,10 +71,10 @@ A worked example. User clicks the `WO10001` link in the matrix:
     - Builds a tab button with `data-tabType="co"`, appends it to the slotted `<tab-strip>` children.
     - Creates a `<customer-order-detail-tab>` element with `data-co-uuid`, `data-co-number`, `data-tab-pane`, `data-base-url` attributes.
     - Appends it to `this._root.querySelector('.content')` (`this._root` is our shadow root).
-4. **`<customer-order-detail-tab>.connectedCallback`** fires, reads its `data-*` attributes, and calls `fetch(`${baseUrl}/customer-orders/${coUuid}`)`.
+4. **`<customer-order-detail-tab>.connectedCallback`** fires, reads its `data-*` attributes, and calls `fetch(`${baseUrl}/customer_orders/${coUuid}`)`.
 5. **The fetch** hits one of:
-    - `/stub/wo-matrix/customer-orders/co-000` → intercepted by `example/stub.js` fetch shim, returns canned JSON.
-    - `/api/2057350/customer-orders/co-000` → SNOW Scripted REST in `snow/scripted-rest/customer-order.js` (or its production GlideRecord-backed replacement).
+    - `/stub/wo-matrix/customer_orders/co-000` → intercepted by `example/stub.js` fetch shim, returns canned JSON.
+    - `/api/2057350/customer_orders/co-000` → SNOW Scripted REST in `snow/scripted-rest/customer-order.js` (or its production GlideRecord-backed replacement).
 6. **Response arrives** wrapped in `{"result": <payload>}` (in SNOW) or flat (in the stub). The detail tab strips the envelope (`raw.result !== undefined ? raw.result : raw`) and renders.
 
 Whole round-trip is one event + one fetch. No global state, no observable subscriptions.
@@ -91,7 +91,7 @@ UI Builder Configure panel
               ↓ resolved per page-render by NXF
               ↓
 view function args
-  state.properties.endpoint    →    "/api/<ns>/work-orders/matrix"
+  state.properties.endpoint    →    "/api/<ns>/work_orders/matrix"
   state.properties.baseUrl     →    "/api/<ns>"
               ↓
               ↓ passed through JSX
@@ -111,7 +111,7 @@ view function args
               ↓
               ↓ detail tab reads its dataset
               ↓
-fetch(`${baseUrl}/customer-orders/${coUuid}`)
+fetch(`${baseUrl}/customer_orders/${coUuid}`)
 ```
 
 Two properties, three URL fragments. Per-environment, only the two property defaults change.

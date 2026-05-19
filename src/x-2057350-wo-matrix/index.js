@@ -105,9 +105,9 @@ createCustomElement('x-2057350-wo-matrix', {
 	properties: {
 		// Matrix endpoint URL. Defaults to the Scripted REST path on the PDI
 		// scope (x_2057350_wo_mat_0). Production ports override per environment
-		// via UI Builder, typically: /api/x_<companycode>_hfs/work-orders/matrix
+		// via UI Builder, typically: /api/x_<companycode>_hfs/work_orders/matrix
 		endpoint: {
-			default: '/api/x_2057350_wo_mat_0/work-orders/matrix',
+			default: '/api/x_2057350_wo_mat_0/work_orders/matrix',
 			schema:  {type: 'string'},
 		},
 		// Base URL prefix the detail tabs (customer-order / rfs / task) use to

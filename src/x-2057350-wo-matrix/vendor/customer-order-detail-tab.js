@@ -253,7 +253,9 @@ class CustomerOrderDetailTab extends HTMLElement {
     // the Scripted REST API scope. The demonstrator omits the attribute.
     const baseUrl = this.dataset.baseUrl ?? "/api";
     try {
-      const res = await fetch(`${baseUrl}/customer-orders/${encodeURIComponent(uuid)}`);
+      // SNOW enforces snake_case API IDs on scoped apps — `customer_orders`,
+      // not `customer-orders`. URL paths follow the same convention end-to-end.
+      const res = await fetch(`${baseUrl}/customer_orders/${encodeURIComponent(uuid)}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const raw = await res.json();
       // Unwrap SNOW's `{result: ...}` envelope; pass through flat payloads

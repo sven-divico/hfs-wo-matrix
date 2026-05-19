@@ -175,7 +175,9 @@ class RfsDetailTab extends HTMLElement {
     const rfsId   = this.dataset.rfsId;
     const baseUrl = this.dataset.baseUrl ?? "/api";
     try {
-      const res = await fetch(`${baseUrl}/rfs-orders/${encodeURIComponent(rfsId)}`);
+      // SNOW enforces snake_case API IDs on scoped apps — `rfs_orders`, not
+      // `rfs-orders`. URL paths follow the same convention end-to-end.
+      const res = await fetch(`${baseUrl}/rfs_orders/${encodeURIComponent(rfsId)}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const raw = await res.json();
       // Unwrap SNOW's `{result: ...}` envelope; pass through flat payloads

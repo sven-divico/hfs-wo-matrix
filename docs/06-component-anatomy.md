@@ -37,7 +37,7 @@ createCustomElement('x-2057350-wo-matrix', {
     styles,
     initialState: {list: 'legacy'},        // sidebar filter; sidebar click toggles via action
     properties: {
-        endpoint: {default: '/api/x_2057350_wo_mat_0/work-orders/matrix', schema: {type: 'string'}},
+        endpoint: {default: '/api/x_2057350_wo_mat_0/work_orders/matrix', schema: {type: 'string'}},
         baseUrl:  {default: '/api/x_2057350_wo_mat_0',                    schema: {type: 'string'}},
     },
     actionHandlers: {
@@ -119,7 +119,7 @@ Each detail tab prepends its `baseUrl` to the constructed URL. The wrapper passe
 async _load() {
     const uuid    = this.dataset.coUuid;
     const baseUrl = this.dataset.baseUrl ?? '/api';     // /api default keeps demo working
-    const res = await fetch(`${baseUrl}/customer-orders/${encodeURIComponent(uuid)}`);
+    const res = await fetch(`${baseUrl}/customer_orders/${encodeURIComponent(uuid)}`);
     // ...
 }
 ```
@@ -205,7 +205,7 @@ The `properties:` block inside `createCustomElement` is **only read at runtime**
                     "label": "Matrix endpoint URL",
                     "description": "Scripted REST URL the matrix fetches rows from.",
                     "fieldType": "string",
-                    "defaultValue": "/api/x_2057350_wo_mat_0/work-orders/matrix"
+                    "defaultValue": "/api/x_2057350_wo_mat_0/work_orders/matrix"
                 },
                 {
                     "name": "baseUrl",
@@ -283,7 +283,7 @@ The component's property defaults stay pointed at production Scripted REST paths
     - **Template**: Blank page.
 4. In the canvas, click **+ Add content** → search for `HFS Work Order` → drag the toolbox tile onto Body.
 5. Click the placed component → in the right Configure panel set:
-    - `Matrix endpoint URL` → `/api/<namespace>/work-orders/matrix`
+    - `Matrix endpoint URL` → `/api/<namespace>/work_orders/matrix`
     - `Detail API base URL` → `/api/<namespace>`
 6. **Save** → **Preview**.
 

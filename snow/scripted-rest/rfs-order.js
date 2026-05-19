@@ -1,4 +1,4 @@
-// Scripted REST resource: GET /api/<namespace>/rfs-orders/{rfsId}
+// Scripted REST resource: GET /api/<namespace>/rfs_orders/{rfsId}
 //
 // Returns a deterministic RFS Work Order detail. rfsId pattern produced by
 // customer-order.js is `rfs-<N>-lma` (LMA RFS) or `rfs-<N>-con` (Connectivity

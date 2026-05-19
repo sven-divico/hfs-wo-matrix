@@ -52,8 +52,8 @@ The component exposes two bindable properties:
 
 | Property | Default | What to set per environment |
 |---|---|---|
-| `Matrix endpoint URL` | `/api/x_2057350_wo_mat_0/work-orders/matrix` | The Scripted REST URL of the `matrix` resource. On a PDI it's `/api/<digits>/work-orders/matrix`; on a scoped instance it's `/api/<scope-namespace>/work-orders/matrix`. |
-| `Detail API base URL` | `/api/x_2057350_wo_mat_0` | The namespace base. The component appends `/customer-orders/{uuid}` and friends to this when fetching detail tabs. |
+| `Matrix endpoint URL` | `/api/x_2057350_wo_mat_0/work_orders/matrix` | The Scripted REST URL of the `matrix` resource. On a PDI it's `/api/<digits>/work_orders/matrix`; on a scoped instance it's `/api/<scope-namespace>/work_orders/matrix`. |
+| `Detail API base URL` | `/api/x_2057350_wo_mat_0` | The namespace base. The component appends `/customer_orders/{uuid}` and friends to this when fetching detail tabs. |
 
 Both are bindable to UI Builder Data Resources or URL parameters — see [docs/03-api-contract.md](docs/03-api-contract.md) and [docs/06-component-anatomy.md §5](docs/06-component-anatomy.md#5-ui-builder-property-metadata-in-now-uijson) for the details.
 

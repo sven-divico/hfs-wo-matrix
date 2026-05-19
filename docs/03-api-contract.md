@@ -24,10 +24,10 @@ This is the wire contract. Four endpoints, documented in the order the component
                    │ fetch(JSON)
                    ▼
 ┌────────────── REST API CONTRACT ───────────────┐
-│  GET /api/<ns>/work-orders/matrix              │
-│  GET /api/<ns>/customer-orders/{uuid}          │
-│  GET /api/<ns>/rfs-orders/{rfsId}              │
-│  GET /api/<ns>/customer-orders/{uuid}/         │
+│  GET /api/<ns>/work_orders/matrix              │
+│  GET /api/<ns>/customer_orders/{uuid}          │
+│  GET /api/<ns>/rfs_orders/{rfsId}              │
+│  GET /api/<ns>/customer_orders/{uuid}/         │
 │            tasks/{taskName}                    │
 └────────────────────────────────────────────────┘
 ```
@@ -38,7 +38,7 @@ The wrapper component exposes two UI Builder properties:
 
 | Property | Default | Used for |
 |---|---|---|
-| `Matrix endpoint URL` | `/api/x_2057350_wo_mat_0/work-orders/matrix` | Set on `<wo-status-matrix data-endpoint=…>` |
+| `Matrix endpoint URL` | `/api/x_2057350_wo_mat_0/work_orders/matrix` | Set on `<wo-status-matrix data-endpoint=…>` |
 | `Detail API base URL` | `/api/x_2057350_wo_mat_0` | Prepended by each detail tab to its own resource path |
 
 ---
@@ -59,7 +59,7 @@ The pivot view. Reads a paginated list of Customer Orders from the matrix endpoi
 
 | Attribute | Type | Default | Description |
 |---|---|---|---|
-| `data-endpoint` | URL string | `/api/x_2057350_wo_mat_0/work-orders/matrix` | Matrix endpoint URL. The component appends `?list=&limit=&offset=`. |
+| `data-endpoint` | URL string | `/api/x_2057350_wo_mat_0/work_orders/matrix` | Matrix endpoint URL. The component appends `?list=&limit=&offset=`. |
 | `data-base-url` | URL string | `/api` | Prefix the detail tabs use to build their own fetch URLs. Propagated through the event details when a CO / task is clicked. |
 | `data-list` | `"legacy" \| "attention"` | `"legacy"` | Filter — `legacy` returns all COs, `attention` returns only COs with ≥ 1 task in state `"Problem"` or `construction_status: "Fallout"`. |
 | `data-tab-pane` | string | — | Set by `<tab-strip>` so the strip can show/hide this pane. Honour `[hidden]` to disable. |
@@ -99,7 +99,7 @@ Customer Order detail pane. Renders header info + RFS pills + a flattened list o
 | `tab:close` | `{ tabId }` | Click on the close `×`. |
 | `ui:toast` | `{ message }` | Click on "Schedule Appointment" (demo-only stub). |
 
-**On connect** it fetches `GET ${baseUrl}/customer-orders/${coUuid}`.
+**On connect** it fetches `GET ${baseUrl}/customer_orders/${coUuid}`.
 
 ---
 
@@ -124,7 +124,7 @@ RFS Work Order detail pane. Shows the parent CO breadcrumb + RFS-scoped task lis
 | `task:open` | `{ coUuid, coNumber, taskName, baseUrl }` | Click on any task row. |
 | `tab:close` | `{ tabId }` | Click on the close `×`. |
 
-**On connect** it fetches `GET ${baseUrl}/rfs-orders/${rfsId}`.
+**On connect** it fetches `GET ${baseUrl}/rfs_orders/${rfsId}`.
 
 ---
 
@@ -148,7 +148,7 @@ Single-task detail pane. Renders state, assignment group, sys_updated_on, and rf
 |---|---|---|
 | `tab:close` | `{ tabId }` | Click on the close `×`. |
 
-**On connect** it fetches `GET ${baseUrl}/customer-orders/${coUuid}/tasks/${encodeURIComponent(taskName)}`.
+**On connect** it fetches `GET ${baseUrl}/customer_orders/${coUuid}/tasks/${encodeURIComponent(taskName)}`.
 
 ---
 
@@ -229,7 +229,7 @@ All events use `bubbles: true, composed: true`. The strip is the only thing in t
 
 ---
 
-### B.1 `GET /api/<ns>/work-orders/matrix`
+### B.1 `GET /api/<ns>/work_orders/matrix`
 
 The pivot endpoint — the one that replaces the developer's manual Excel sheet.
 
@@ -288,7 +288,7 @@ type TaskState =
 
 ---
 
-### B.2 `GET /api/<ns>/customer-orders/{uuid}`
+### B.2 `GET /api/<ns>/customer_orders/{uuid}`
 
 Full detail for one Customer Order. Used by `<customer-order-detail-tab>`.
 
@@ -338,7 +338,7 @@ interface TaskDetail {
 
 ---
 
-### B.3 `GET /api/<ns>/rfs-orders/{rfsId}`
+### B.3 `GET /api/<ns>/rfs_orders/{rfsId}`
 
 RFS Work Order detail. Used by `<rfs-detail-tab>`.
 
@@ -379,7 +379,7 @@ interface RfsTask {
 
 ---
 
-### B.4 `GET /api/<ns>/customer-orders/{uuid}/tasks/{taskName}`
+### B.4 `GET /api/<ns>/customer_orders/{uuid}/tasks/{taskName}`
 
 Single task detail. Used by `<task-detail-tab>`.
 

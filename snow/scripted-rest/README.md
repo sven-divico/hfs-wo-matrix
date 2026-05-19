@@ -8,14 +8,14 @@ For the production back-end pattern that replaces these stubs, see [docs/04-data
 
 The wrapper component is configured with two UI Builder properties:
 
-- `Matrix endpoint URL` → `/api/<namespace>/work-orders/matrix`
+- `Matrix endpoint URL` → `/api/<namespace>/work_orders/matrix`
 - `Detail API base URL`  → `/api/<namespace>`
 
 The detail tabs then derive:
 
-- `/api/<namespace>/customer-orders/{uuid}`
-- `/api/<namespace>/customer-orders/{uuid}/tasks/{taskName}`
-- `/api/<namespace>/rfs-orders/{rfsId}`
+- `/api/<namespace>/customer_orders/{uuid}`
+- `/api/<namespace>/customer_orders/{uuid}/tasks/{taskName}`
+- `/api/<namespace>/rfs_orders/{rfsId}`
 
 On a PDI `<namespace>` is the bare digits of the scope (e.g. `2057350`). On a real instance with a `x_<companycode>_*` scope, the namespace is whatever your platform team assigns — check the **API namespace** field on each Scripted REST API record after creation.
 
@@ -32,16 +32,16 @@ For each of the three APIs below:
 
 | API name | API ID (override) | Resources |
 |---|---|---|
-| Work Orders | `work-orders` | `/matrix` |
-| Customer Orders | `customer-orders` | `/{uuid}`, `/{uuid}/tasks/{taskName}` |
-| RFS Orders | `rfs-orders` | `/{rfsId}` |
+| Work Orders | `work_orders` | `/matrix` |
+| Customer Orders | `customer_orders` | `/{uuid}`, `/{uuid}/tasks/{taskName}` |
+| RFS Orders | `rfs_orders` | `/{rfsId}` |
 
 ## Files in this directory
 
-- `matrix.js` — paste into the `/matrix` resource of the `work-orders` API.
-- `customer-order.js` — paste into the `/{uuid}` resource of `customer-orders`.
-- `task.js` — paste into the `/{uuid}/tasks/{taskName}` resource of `customer-orders`.
-- `rfs-order.js` — paste into the `/{rfsId}` resource of `rfs-orders`.
+- `matrix.js` — paste into the `/matrix` resource of the `work_orders` API.
+- `customer-order.js` — paste into the `/{uuid}` resource of `customer_orders`.
+- `task.js` — paste into the `/{uuid}/tasks/{taskName}` resource of `customer_orders`.
+- `rfs-order.js` — paste into the `/{rfsId}` resource of `rfs_orders`.
 
 Each script is self-contained (no Script Includes required). Lots of duplication between them — that's intentional for showcase clarity. A production port would extract the shared `COLUMNS` / `CITIES` arrays into a `HFSStubData` Script Include and call into it from each resource.
 

@@ -206,9 +206,9 @@ The three detail endpoints follow the same Scripted REST pattern as `/matrix`; o
 
 | Endpoint | Joins | Returns |
 |---|---|---|
-| `GET /customer-orders/{uuid}` | `co → rfs → task` (both RFS) | The CO plus both nested RFS summaries plus the flattened task list |
-| `GET /rfs-orders/{rfsId}` | `rfs → co` upward, `rfs → task` downward | The RFS, its tasks, and the parent Customer Order |
-| `GET /customer-orders/{uuid}/tasks/{taskName}` | `co → rfs → task WHERE short_description=…` | A single task; resolves through both RFS so the caller never picks a side |
+| `GET /customer_orders/{uuid}` | `co → rfs → task` (both RFS) | The CO plus both nested RFS summaries plus the flattened task list |
+| `GET /rfs_orders/{rfsId}` | `rfs → co` upward, `rfs → task` downward | The RFS, its tasks, and the parent Customer Order |
+| `GET /customer_orders/{uuid}/tasks/{taskName}` | `co → rfs → task WHERE short_description=…` | A single task; resolves through both RFS so the caller never picks a side |
 
 Reference Scripted REST scripts in [`snow/scripted-rest/`](../snow/scripted-rest/) implement these against synthetic data. Swap `for (var i = 0; ...)` synthesis for a GlideRecord on the appropriate table; the response shape is unchanged.
 

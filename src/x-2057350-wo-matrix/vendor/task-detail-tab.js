@@ -167,7 +167,8 @@ class TaskDetailTab extends HTMLElement {
     const baseUrl  = this.dataset.baseUrl ?? "/api";
 
     try {
-      const url = `${baseUrl}/customer-orders/${encodeURIComponent(coUuid)}/tasks/${encodeURIComponent(taskName)}`;
+      // SNOW enforces snake_case API IDs — see customer-order-detail-tab.js.
+      const url = `${baseUrl}/customer_orders/${encodeURIComponent(coUuid)}/tasks/${encodeURIComponent(taskName)}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const raw = await res.json();

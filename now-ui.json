@@ -8,7 +8,7 @@
           "label": "Matrix endpoint URL",
           "description": "Scripted REST URL the matrix fetches its rows from. Defaults to the PDI scope; production ports typically bind this per environment.",
           "fieldType": "string",
-          "defaultValue": "/api/x_2057350_wo_mat_0/work-orders/matrix"
+          "defaultValue": "/api/x_2057350_wo_mat_0/work_orders/matrix"
         },
         {
           "name": "baseUrl",

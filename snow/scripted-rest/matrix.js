@@ -1,4 +1,4 @@
-// Scripted REST resource: GET /api/<namespace>/work-orders/matrix
+// Scripted REST resource: GET /api/<namespace>/work_orders/matrix
 //
 // Returns a deterministic 27-row table matching the matrix data contract.
 // Query params:

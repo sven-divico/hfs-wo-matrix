@@ -1,4 +1,4 @@
-// Scripted REST resource: GET /api/<namespace>/customer-orders/{uuid}
+// Scripted REST resource: GET /api/<namespace>/customer_orders/{uuid}
 //
 // Returns a deterministic Customer Order detail for the given uuid. The uuid
 // pattern produced by the matrix endpoint is `co-NNN` (zero-padded index 0-26);
