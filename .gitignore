@@ -20,3 +20,4 @@ coverage
 /lib/
 /target/
 .tectonic-output
+.claude
