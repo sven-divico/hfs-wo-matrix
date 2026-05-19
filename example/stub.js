@@ -205,7 +205,11 @@ export function installStub() {
 	installed = true;
 	const realFetch = window.fetch.bind(window);
 	window.fetch = (input, init) => {
-		const url = typeof input === "string" ? input : input?.url ?? "";
+		// `fetch()` accepts strings, URL objects, and Request objects. URL exposes
+		// `href`, Request exposes `url`. Cover all three before falling through.
+		const url = typeof input === "string"
+			? input
+			: (input && (input.href || input.url)) || "";
 		if (url.includes(STUB_PREFIX)) return Promise.resolve(handleStub(url));
 		return realFetch(input, init);
 	};

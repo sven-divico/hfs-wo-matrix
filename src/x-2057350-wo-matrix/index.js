@@ -12,27 +12,30 @@ import './vendor/task-detail-tab.js';
 
 import styles from './styles.scss';
 
-// Inline 14px SVG icon used in the permanent "Legacy Orders" tab — kept here
-// (rather than in the tab-strip vendor file) so snabbdom can render it as part
-// of the view tree.
+// Inline 14px SVG icon used in the permanent "Legacy Orders" tab.
+// snabbdom-NXF treats unprefixed JSX attributes as JS property setters by
+// default, which breaks on SVG (e.g. SVGElement.width is a read-only
+// SVGAnimatedLength). The `attr-` prefix forces snabbdom to use setAttribute
+// instead, which is what SVG needs.
 const ListIcon = () => (
-	<svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-	     stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-		<path d="M4 6h16M4 12h16M4 18h16"/>
+	<svg attr-width="14" attr-height="14" attr-viewBox="0 0 24 24" attr-fill="none"
+	     attr-stroke="currentColor" attr-stroke-width="2" attr-stroke-linecap="round" attr-aria-hidden="true">
+		<path attr-d="M4 6h16M4 12h16M4 18h16"/>
 	</svg>
 );
 
-// NXF has two view-arg shapes. Classic: `(state, helpers)` where `state` has
-// `state.properties.endpoint` etc. Coeffects: a single bag `{state, properties,
-// dispatch, updateState, host, …}` and the second arg is undefined. Decide
-// based on the presence of arg2 so the component renders either way.
-const view = (arg1, arg2) => {
-	const coeffects  = arg2 === undefined;
-	const properties = (coeffects ? arg1.properties : arg1.properties) || {};
-	const stateBag   = coeffects ? (arg1.state || {})                 : arg1;
-	const dispatch   = coeffects ? arg1.dispatch                      : arg2.dispatch;
-	const {endpoint = '', baseUrl = ''} = properties;
-	const {list = 'legacy'}             = stateBag;
+// NXF view signature in this runtime: `(state, dispatch)`. state carries
+// `properties` and the component's own state keys (`list`). dispatch is a
+// bare function. Empirically verified by deploying a diagnostic view that
+// dumped both args.
+//
+// IMPORTANT: snabbdom's JSX `style` attribute MUST be an object, never a
+// string — passing a string makes snabbdom iterate it character by
+// character and crash with "Indexed property setter is not supported".
+// We don't use inline `style` anywhere; all styling goes through className
+// + the imported styles.scss. Stick with that.
+const view = (state, dispatch) => {
+	const {properties: {endpoint = '', baseUrl = ''} = {}, list = 'legacy'} = state || {};
 	const setList = next => dispatch('HFS#SIDEBAR_LIST_CLICKED', {list: next});
 	return (
 		<div className="hfs-shell">
@@ -53,7 +56,7 @@ const view = (arg1, arg2) => {
 			</div>
 
 			<tab-strip>
-				<button slot="tab" data-tab-id="matrix" data-tab-type="list" className="active">
+				<button slot="tab" data-tabId="matrix" data-tabType="list" className="active">
 					<ListIcon/>
 					<span className="tab-label">Legacy Orders</span>
 				</button>
@@ -79,9 +82,9 @@ const view = (arg1, arg2) => {
 					<wo-status-matrix
 						id="matrix-view"
 						data-endpoint={endpoint}
-						data-base-url={baseUrl}
+						data-baseUrl={baseUrl}
 						data-list={list}
-						data-tab-pane="matrix">
+						data-tabPane="matrix">
 					</wo-status-matrix>
 				</section>
 			</main>

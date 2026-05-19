@@ -1,0 +1,91 @@
+diff --git a/node_modules/@servicenow/ui-core/lib/utils/schema/ajv.js b/node_modules/@servicenow/ui-core/lib/utils/schema/ajv.js
+index 3dd7831..62b70f7 100644
+--- a/node_modules/@servicenow/ui-core/lib/utils/schema/ajv.js
++++ b/node_modules/@servicenow/ui-core/lib/utils/schema/ajv.js
+@@ -51,19 +51,27 @@ if (validateSchemas) {
+       return false;
+     }
+   });
+-  ajv.addKeyword('deprecated', {
+-    validate: function validateDeprecation(schema) {
+-      if (!schema) return true;
+-      var message = typeof schema === 'boolean' ? 'has been deprecated' : schema;
+-      validateDeprecation.errors = [{
+-        message: message,
+-        params: {
+-          level: 'warn'
+-        }
+-      }];
+-      return false;
+-    }
+-  });
++  // wo-matrix local-dev patch: Ajv 8.x ships `deprecated` as a built-in keyword,
++  // so this addKeyword call throws and stops the whole bundle from initialising
++  // in `snc ui-component develop`. Tolerate the duplicate.
++  try {
++    ajv.addKeyword('deprecated', {
++      validate: function validateDeprecation(schema) {
++        if (!schema) return true;
++        var message = typeof schema === 'boolean' ? 'has been deprecated' : schema;
++        validateDeprecation.errors = [{
++          message: message,
++          params: {
++            level: 'warn'
++          }
++        }];
++        return false;
++      }
++    });
++  } catch (e) {
++    var msg = String(e && e.message);
++    if (msg.indexOf('already defined') === -1) throw e;
++  }
+ } else {
+   ajv = {
+     compile: function compile() {
+diff --git a/node_modules/@servicenow/ui-core/module/utils/schema/ajv.js b/node_modules/@servicenow/ui-core/module/utils/schema/ajv.js
+index 45124da..1bd9e23 100644
+--- a/node_modules/@servicenow/ui-core/module/utils/schema/ajv.js
++++ b/node_modules/@servicenow/ui-core/module/utils/schema/ajv.js
+@@ -42,19 +42,28 @@ if (validateSchemas) {
+       return false;
+     }
+   });
+-  ajv.addKeyword('deprecated', {
+-    validate: function validateDeprecation(schema) {
+-      if (!schema) return true;
+-      const message = typeof schema === 'boolean' ? 'has been deprecated' : schema;
+-      validateDeprecation.errors = [{
+-        message,
+-        params: {
+-          level: 'warn'
+-        }
+-      }];
+-      return false;
+-    }
+-  });
++  // wo-matrix local-dev patch: Ajv 8.x ships `deprecated` as a built-in
++  // keyword, so this addKeyword call throws and stops the whole bundle
++  // from initialising in `snc ui-component develop`. Skip if it already
++  // exists (no behaviour change — Ajv's built-in only differs in that it
++  // doesn't surface ui-core's custom warning message).
++  try {
++    ajv.addKeyword('deprecated', {
++      validate: function validateDeprecation(schema) {
++        if (!schema) return true;
++        const message = typeof schema === 'boolean' ? 'has been deprecated' : schema;
++        validateDeprecation.errors = [{
++          message,
++          params: {
++            level: 'warn'
++          }
++        }];
++        return false;
++      }
++    });
++  } catch (e) {
++    if (!String(e && e.message).includes('already defined')) throw e;
++  }
+ } else {
+   ajv = {
+     compile: () => () => true
