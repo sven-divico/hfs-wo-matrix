@@ -1,1 +1,374 @@
 @import '@servicenow/sass-kit/host';
+
+/* =====================================================================
+   HFS wo-matrix wrapper — copy of public/app.css from the demonstrator
+   with two changes:
+
+     1. The :root token block is replaced by a :host block that maps
+        --hfs-* to Polaris (--now-*) tokens. The component picks up
+        Workspace theming (light/dark, accent colours, branding) for free.
+
+     2. The body-level rules from the demo (font, background, flex column
+        layout) are applied to the :host instead, since our snabbdom view
+        renders inside this component's shadow root.
+   ===================================================================== */
+
+:host {
+	/* ---------------------------------------------------------------
+	   1. Polaris token mapping
+	   --------------------------------------------------------------- */
+
+	--hfs-font: var(--now-font-family, "Source Sans 3", -apple-system,
+	             BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif);
+
+	/* Surfaces */
+	--hfs-color-bg:         var(--now-color-background--surface,   #f4f5f7);
+	--hfs-color-surface:    var(--now-color-background--primary,   #fff);
+	--hfs-color-sidebar:    var(--now-color-background--secondary, #fafbfc);
+	--hfs-color-tab-active: var(--now-color-background--neutral,   #dde3eb);
+	--hfs-color-toolbar:    var(--now-color-background--tertiary,  #eef0f3);
+	--hfs-color-border:     var(--now-color-border,                #d8dde3);
+
+	/* Text */
+	--hfs-color-text:       var(--now-color-text,             #1b2734);
+	--hfs-color-text-muted: var(--now-color-text--secondary,  #5b6770);
+
+	/* Brand */
+	--hfs-color-primary:    var(--now-color-primary,            #1f8476);
+	--hfs-color-primary-bg: var(--now-color-primary-background, #e8f5f1);
+
+	/* Top-bar */
+	--hfs-color-topbar:      var(--now-color-background--high-contrast, #1b2734);
+	--hfs-color-topbar-text: var(--now-color-text--high-contrast,       #fff);
+
+	/* Status dot fills */
+	--hfs-status-open:      var(--now-color-text--secondary, #9aa5b1);
+	--hfs-status-pending:   var(--now-color-notice,          #f59e0b);
+	--hfs-status-scheduled: var(--now-color-information,     #3b82f6);
+	--hfs-status-done:      var(--now-color-positive,        #10b981);
+	--hfs-status-problem:   var(--now-color-critical,        #dc2626);
+
+	/* Spacing + heights — kept literal; they're component-internal and
+	   binding them to --now-spacing-* changes the visual contract. */
+	--hfs-space-xs:   4px;
+	--hfs-space-sm:   8px;
+	--hfs-space-md:  16px;
+	--hfs-space-lg:  24px;
+	--hfs-topbar-h:   48px;
+	--hfs-tabstrip-h: 40px;
+	--hfs-toolbar-h:  40px;
+	--hfs-sidebar-w: 200px;
+
+	/* ---------------------------------------------------------------
+	   2. Host layout — replaces the demo's body styles
+	   --------------------------------------------------------------- */
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 480px;     /* sensible floor for the snc develop preview */
+	font-family: var(--hfs-font);
+	font-size: 14px;
+	color: var(--hfs-color-text);
+	background: var(--hfs-color-bg);
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+}
+
+.hfs-shell {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* -------------------------------------------------------------------
+   3. Topbar
+   ------------------------------------------------------------------- */
+.topbar {
+	display: flex;
+	align-items: center;
+	height: var(--hfs-topbar-h);
+	background: var(--hfs-color-topbar);
+	color: var(--hfs-color-topbar-text);
+	padding: 0 var(--hfs-space-md);
+	gap: var(--hfs-space-md);
+	flex-shrink: 0;
+	z-index: 10;
+}
+
+.topbar .brand {
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	background: var(--hfs-color-primary);
+	color: #fff;
+	width: 32px;
+	height: 32px;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.topbar nav {
+	display: flex;
+	gap: 2px;
+	flex: 1;
+}
+
+.topbar nav span {
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.75);
+	padding: 4px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s;
+}
+
+.topbar nav span:hover {
+	background: rgba(255, 255, 255, 0.12);
+	color: #fff;
+}
+
+/* -------------------------------------------------------------------
+   4. Workspace pill
+   ------------------------------------------------------------------- */
+.workspace-pill {
+	font-size: 13px;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.9);
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 16px;
+	padding: 4px 12px;
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+/* -------------------------------------------------------------------
+   5. Action bar
+   ------------------------------------------------------------------- */
+.action-bar {
+	height: var(--hfs-toolbar-h, 40px);
+	background: var(--hfs-color-toolbar);
+	border-bottom: 1px solid var(--hfs-color-border);
+	display: flex;
+	align-items: center;
+	padding: 0 var(--hfs-space-md);
+	gap: var(--hfs-space-md);
+	flex-shrink: 0;
+	font-size: 12px;
+	color: var(--hfs-color-text-muted);
+}
+
+.action-bar-hint  { font-style: italic; opacity: 0.7; }
+.action-bar-spacer { flex: 1; }
+
+/* -------------------------------------------------------------------
+   6. Tab-strip + tab buttons (slotted into tab-strip's shadow DOM)
+   ------------------------------------------------------------------- */
+tab-strip {
+	display: block;
+	flex-shrink: 0;
+}
+
+/* Belt-and-braces sizing for the matrix host. Custom elements default to
+   display: inline before their JS defines them, which breaks the inner
+   height: 100% resolution and suppresses the .table-scroll overflow. */
+wo-status-matrix {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+	overflow: hidden;
+}
+
+tab-strip > button[slot="tab"][data-tab-type="list"] { --tab-accent: var(--hfs-color-primary); }
+tab-strip > button[slot="tab"][data-tab-type="co"]   { --tab-accent: var(--hfs-color-primary); }
+tab-strip > button[slot="tab"][data-tab-type="wo"]   { --tab-accent: var(--hfs-status-scheduled); }
+tab-strip > button[slot="tab"][data-tab-type="task"] { --tab-accent: var(--hfs-status-pending); }
+
+tab-strip > button[slot="tab"] > svg {
+	color: var(--tab-accent, currentColor);
+	flex-shrink: 0;
+}
+
+tab-strip > button[slot="tab"] > .tab-label { color: inherit; }
+
+tab-strip > button[slot="tab"] > .tab-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 4px;
+	margin-right: -8px;
+	padding: 4px;
+	border-radius: 3px;
+	color: var(--hfs-color-text-muted);
+	opacity: 0.6;
+	cursor: pointer;
+	transition: background 0.12s, color 0.12s, opacity 0.12s;
+}
+tab-strip > button[slot="tab"] > .tab-close:hover {
+	background: rgba(220, 38, 38, 0.12);
+	color: var(--hfs-status-problem);
+	opacity: 1;
+}
+tab-strip > button[slot="tab"][data-tab-id="matrix"] > .tab-close { display: none; }
+
+/* -------------------------------------------------------------------
+   7. Workspace — sidebar + content
+   ------------------------------------------------------------------- */
+.workspace {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+	min-height: 0;
+}
+
+.sidebar {
+	width: var(--hfs-sidebar-w);
+	flex-shrink: 0;
+	background: var(--hfs-color-sidebar);
+	border-right: 1px solid var(--hfs-color-border);
+	padding: var(--hfs-space-md) 0;
+	overflow-y: auto;
+}
+
+.sidebar-section-title {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--hfs-color-text-muted);
+	padding: 0 var(--hfs-space-md) var(--hfs-space-sm);
+}
+
+.list-item {
+	display: block;
+	width: 100%;
+	text-align: left;
+	background: none;
+	border: none;
+	font-family: var(--hfs-font);
+	font-size: 13px;
+	color: var(--hfs-color-text);
+	padding: 7px var(--hfs-space-md);
+	cursor: pointer;
+	border-left: 3px solid transparent;
+	transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.list-item:hover {
+	background: var(--hfs-color-primary-bg);
+	color: var(--hfs-color-primary);
+}
+
+.list-item.active {
+	background: var(--hfs-color-primary-bg);
+	color: var(--hfs-color-primary);
+	border-left-color: var(--hfs-color-primary);
+	font-weight: 600;
+}
+
+/* -------------------------------------------------------------------
+   8. Content pane
+   ------------------------------------------------------------------- */
+.content {
+	flex: 1;
+	overflow: hidden;
+	position: relative;
+	min-width: 0;
+}
+
+/* Tab panes — let each element use its native display value. */
+[data-tab-pane][hidden] { display: none !important; }
+
+/* -------------------------------------------------------------------
+   9. Light-DOM table base — reproduces the demo's :root rules. The
+      matrix uses these in its own shadow style; these duplicates
+      cover any non-shadow-DOM fallback.
+   ------------------------------------------------------------------- */
+table {
+	border-collapse: collapse;
+	font-size: 11px;
+	font-family: var(--hfs-font);
+	width: max-content;
+	min-width: 100%;
+}
+
+th, td {
+	padding: 6px 8px;
+	border-bottom: 1px solid var(--hfs-color-border);
+	border-right: 1px solid var(--hfs-color-border);
+	white-space: nowrap;
+	text-align: left;
+	vertical-align: middle;
+}
+
+th {
+	font-weight: 600;
+	font-size: 11px;
+	color: var(--hfs-color-text-muted);
+	background: var(--hfs-color-bg);
+}
+
+thead th {
+	position: sticky;
+	top: 0;
+	background: var(--hfs-color-bg);
+	z-index: 2;
+}
+
+td.sticky,
+th.sticky {
+	position: sticky;
+	left: 0;
+	background: var(--hfs-color-surface);
+	z-index: 1;
+}
+
+thead th.sticky {
+	z-index: 3;
+	background: var(--hfs-color-bg);
+}
+
+tr:hover td,
+tr:hover td.sticky {
+	background: var(--hfs-color-primary-bg);
+}
+
+/* -------------------------------------------------------------------
+   10. Status dot classes (canonical reference — components duplicate
+       these inside their shadow styles).
+   ------------------------------------------------------------------- */
+.dot {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.dot.open      { background: transparent; border: 1.5px solid var(--hfs-status-open); }
+.dot.pending   { background: var(--hfs-status-pending);   border: none; }
+.dot.scheduled { background: var(--hfs-status-scheduled); border: none; }
+.dot.done      { background: var(--hfs-status-done);      border: none; }
+.dot.problem   { background: var(--hfs-status-problem);   border: none; }
+
+.dot.na {
+	display: inline;
+	width: auto;
+	height: auto;
+	border-radius: 0;
+	background: none;
+	border: none;
+	color: var(--hfs-color-text-muted);
+	font-size: 12px;
+	cursor: default;
+}
+
+.dot.na::before { content: "—"; }

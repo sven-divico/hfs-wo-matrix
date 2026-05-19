@@ -1,0 +1,19 @@
+[
+  {"name":"HV-S","short":"HV","label":"Standard House Visit","sequence":1},
+  {"name":"UV-S","short":"UV","label":"Standard Unit Visit","sequence":2},
+  {"name":"HV-NE4","short":"HV4","label":"House Visit NE4","sequence":3},
+  {"name":"UV-NE4","short":"UV4","label":"Unit Visit NE4","sequence":4},
+  {"name":"GIS Planung","short":"GP","label":"GIS Planning - NAS","sequence":5},
+  {"name":"Fremdleitungsplan","short":"LLD","label":"Utility Lines Plan","sequence":6},
+  {"name":"Genehmigungen","short":"PM","label":"Permits (VRAO / Aufbruch)","sequence":7},
+  {"name":"Tiefbau","short":"CV","label":"Civil Works","sequence":8},
+  {"name":"Spleißen","short":"SP","label":"Splicing","sequence":9},
+  {"name":"Einblasen","short":"BF","label":"Blow-in Fiber","sequence":10},
+  {"name":"Gartenbohrung","short":"GD","label":"Garden Drilling","sequence":11},
+  {"name":"Hauseinführung","short":"WB","label":"Wall Breakthrough","sequence":12},
+  {"name":"HÜP","short":"HÜP","label":"Install HÜP","sequence":13},
+  {"name":"Leitungsweg NE4","short":"CW4","label":"Cable Way NE4","sequence":14},
+  {"name":"GFTA","short":"GFTA","label":"Install GFTA","sequence":15},
+  {"name":"ONT","short":"ONT","label":"Install ONT","sequence":16},
+  {"name":"Patch","short":"PCH","label":"Patch","sequence":17}
+]

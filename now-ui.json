@@ -7,9 +7,9 @@
           "global.core",
           "global.landing-page"
         ],
-        "label": "My Component",
+        "label": "HFS Work Order Matrix",
         "tileIcon": "./tile-icon/generic-tile-icon.svg",
-        "description": "A description of my component",
+        "description": "HFS Work Order × Task status matrix with drill-down tabs",
         "category": "primitives"
       }
     }
