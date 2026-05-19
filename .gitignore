@@ -21,3 +21,4 @@ coverage
 /target/
 .tectonic-output
 .claude
+.now-cli

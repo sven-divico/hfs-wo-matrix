@@ -2,6 +2,22 @@
   "components": {
     "x-2057350-wo-matrix": {
       "innerComponents": [],
+      "properties": [
+        {
+          "name": "endpoint",
+          "label": "Matrix endpoint URL",
+          "description": "Scripted REST URL the matrix fetches its rows from. Defaults to the PDI scope; production ports typically bind this per environment.",
+          "fieldType": "string",
+          "defaultValue": "/api/x_2057350_wo_mat_0/work-orders/matrix"
+        },
+        {
+          "name": "baseUrl",
+          "label": "Detail API base URL",
+          "description": "URL prefix the detail tabs (customer-order / RFS / task) build their own fetch URLs from. Should be the Scripted REST API base in the same scope as the matrix endpoint.",
+          "fieldType": "string",
+          "defaultValue": "/api/x_2057350_wo_mat_0"
+        }
+      ],
       "uiBuilder": {
         "associatedTypes": [
           "global.core",
