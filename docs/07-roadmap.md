@@ -57,6 +57,16 @@ The sidebar has two static entries (`Legacy Orders`, `Needs Attention`). Realist
 
 The matrix endpoint's `list` parameter is currently a string enum (`legacy` | `attention`). Generalising to a JSON filter blob makes the API more expressive at the cost of contract churn — decide before extending.
 
+### 4.x Next-session backlog (planned)
+
+The next development session is queued to deliver three concrete features in this area:
+
+1. **Hide/show columns.** A header-cell control (gear icon or right-click menu) lets the dispatcher toggle visibility of any of the 17 task columns. The five sticky meta columns (`CUSTOMER ORDER`, `Status`, `City`, `Address`, `Construction`) stay always-on. Implementation lives in `vendor/wo-status-matrix.js` — store the hidden set in component instance state, re-render the header + body cells with a `data-hidden` class that `display: none`s them.
+2. **Persist column visibility in user preferences.** Save the hidden-column set per user via SNOW's `sys_user_preference` table — preference name `x_company.hfs.wo_matrix.hidden_columns`, value a JSON-serialised array of canonical task names. On component connect, GET the preference (new Scripted REST resource or a `GlideAjax` call); on toggle, PATCH it. Falls back to "all visible" if the preference doesn't exist.
+3. **Business-requested filters.** TBD — specifics captured in the next session from the conversation Sven brings. Likely candidates from the conversation: filter by city, by RFS type (LMA / Connectivity), by construction status. Pattern follows the same `list` enum extension, or migrates to a richer filter blob if the variety justifies it.
+
+These cross-cut the front-end, the API contract, the Scripted REST layer, and (for filter persistence) ACLs. Worth designing the API contract addition first — see [03-api-contract.md](03-api-contract.md) for where it lands.
+
 ---
 
 ## 5. Real-time refresh
